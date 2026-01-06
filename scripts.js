@@ -44,30 +44,55 @@ form.addEventListener('submit', function (e) {
     const UserLocation = document.getElementById('location').value;
 
     
-    const inputs = {
-        rowSpacing, earsIn4Meters, kernelsPerEar, femaleArea,
-        uniformFactor, kernelsPerKg, standingArea
-      };
-      for (const [key, val] of Object.entries(inputs)) {
-        if (Number.isNaN(val)) {
-          alert(`กรุณากรอกค่าที่ถูกต้องในช่อง: ${key}`);
-          return; // หยุดถ้าข้อมูลไม่ครบ
-        }    
-      }
+const submitBtn = form.querySelector('[type="submit"]');
 
-    
-    // Perform the calculation using the provided formula
-    const yieldEstimate =
-        (((((1600 / (rowSpacing / 100)) / (4 / earsIn4Meters)) * femaleArea) *
-            kernelsPerEar *
-            (uniformFactor / 100)) /
-        kernelsPerKg) / 0.6;
+  // --- VALIDATION ขั้นพื้นฐาน ---
+  // 1) ตรวจว่าค่า number ไม่เป็น NaN
+  const numericInputs = {
+    rowSpacing, earsIn4Meters, kernelsPerEar, femaleArea,
+    uniformFactor, kernelsPerKg, standingArea
+  };
+  for (const [key, val] of Object.entries(numericInputs)) {
+    if (Number.isNaN(val)) {
+      console.warn(`Invalid input: ${key} is NaN`);
+      alert('กรุณากรอกค่าตัวเลขให้ครบทุกช่อง (รวมถึงค่าอัตโนมัติจากตัวเลือกด้วย)');
+      // อย่า disable ปุ่มก่อน validation ผ่าน ดังนั้นไม่ต้องเปิดปุ่มที่นี่
+      return;
+    }
+  }
 
-    // Calculate Total Wet Ear (Kg)
-    const totalWetEar = standingArea * yieldEstimate;
+  // 2) (ทางเลือก) ตรวจว่า select ถูกเลือก (ไม่ใช่ placeholder)
+  // สมมติ option แรกคือ placeholder
+  if (hybridDropdown.selectedIndex === 0) {
+    alert('กรุณาเลือกสายพันธุ์ (Hybrid)');
+    return;
+  }
+  if (femaleAreaRatioDropdown.selectedIndex === 0) {
+    alert('กรุณาเลือกร้อยละพื้นที่ตัวเมีย');
+    return;
+  }
 
-    // Calculate Population
-    const population = ((1600 / (rowSpacing / 100)) / (4 / earsIn4Meters)) * femaleArea;
+  // ผ่าน validation แล้วค่อยปิดปุ่ม (กันกดซ้ำ)
+  if (submitBtn) submitBtn.disabled = true;
+
+  // --- คำนวณ ---
+  let yieldEstimate, totalWetEar, population;
+  try {
+    yieldEstimate =
+      (((((1600 / (rowSpacing / 100)) / (4 / earsIn4Meters)) * femaleArea) *
+        kernelsPerEar *
+        (uniformFactor / 100)) /
+      kernelsPerKg) / 0.6;
+
+    totalWetEar = standingArea * yieldEstimate;
+    population = ((1600 / (rowSpacing / 100)) / (4 / earsIn4Meters)) * femaleArea;
+  } catch (err) {
+    console.error('Error during calculation:', err);
+    alert('เกิดข้อผิดพลาดในการคำนวณ กรุณาตรวจสอบข้อมูลอีกครั้ง');
+    if (submitBtn) submitBtn.disabled = false; // เปิดปุ่มกลับก่อนออก
+    return;
+  }
+
 
     // Display the population
     populationElement.innerHTML = `
@@ -89,10 +114,6 @@ form.addEventListener('submit', function (e) {
 
      // Show the results section
      resultsSection.hidden = false; // Remove the hidden attribute
-
-    
-    const submitBtn = form.querySelector('[type="submit"]');
-    if (submitBtn) submitBtn.disabled = true;
 
 
     fetch("https://script.google.com/macros/s/AKfycbwrjHKV-BZi7H-ODdsVnjNTGG2cwycoOd_lFOU0FgGb2XReurlXJDoHlW0oa8GACLZr/exec", {
@@ -136,6 +157,7 @@ kernelsPerKgInput.value = "";
 femaleAreaInput.value = "";
 
 });
+
 
 
 

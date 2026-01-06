@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corn Yield Estimate App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+        <!-- Watermark Options - Choose one by uncommenting -->
+    
+    <!-- Option 1: Large diagonal watermark -->
+    <div class="watermark">© Popporn Yingthongchai</div>
+    
+    <!-- Option 2: Corner watermark (uncomment to use instead) -->
+    <div class="watermark-corner">© Popporn Yingthongchai</div>
+    
+    <!-- Option 3: Pattern watermark (uncomment to use instead) -->
+    <!--<div class="watermark-pattern">© Popporn Yingthongchai</div> -->
+
+    <header>
+        <h1>Corn Yield Estimate App</h1>
+    </header>
+
+    <main>
+        <section class="input-wrapper">
+            <h2>กรุณากรอกข้อมูล</h2>
+            <form id="yieldForm">
+                <label for="firstName">ชื่อ:</label>
+                <input type="text" id="firstName" name="firstName" required>
+                <label for="lastName">นามสกุล:</label>
+                <input type="text" id="lastName" name="lastName" required>
+                <label for="location">เขต:</label>
+                <select id="location" name="location" required>
+                    <option value="">-- เลือก เขต --</option>
+                    <option value="Phitsanulok">Phitsanulok</option>
+                    <option value="Nakhon Sawan">Nakhon Sawan</option>
+                    <option value="Suphanburi">Suphanburi</option>
+                    <option value="Other">Other</option>
+                </select>
+                <!-- Hybrid Selection Dropdown -->
+                <label for="hybrid">สายพันธุ์:</label>
+                <select id="hybrid" name="hybrid" required>
+                    <option value="">-- เลือก สายพันธุ์ --</option>
+                    <option value="5678">#90</option>
+                    <option value="6176">#71</option>
+                    <option value="5678">#80</option>
+                    <option value="6697">#51</option>
+                    <option value="5260">#55</option>
+                    <option value="4051">#86</option>
+                    <option value="5260">#56</option>
+                    <option value="5260">#57</option>
+                    <option value="5201">#SB04</option>
+                    <option value="6697">#60</option>
+                    <option value="6697">#61</option>
+                </select>
+
+                <!-- Female Area Selection Dropdown -->
+                <label for="femaleAreaRatio">อัตราส่วนตัวเมียกับตัวผู้:</label>
+                <select id="femaleAreaRatio" name="femaleAreaRatio" required>
+                    <option value="">-- เลือก อัตราส่วนการปลูก --</option>
+                    <option value="0.666666667">2:1</option>
+                    <option value="0.75">3:1</option>
+                    <option value="0.8">4:1</option>
+                    <option value="0.833333333">5:1</option>
+                    <option value="0.60">3:2</option>
+                    <option value="0.666666667">4:2</option>
+                    <option value="1.00">Interrow</option>
+                    <option value="0.857142857">6:1</option>
+                    <option value="0.875">7:1</option>
+                </select>
+
+                <!-- Other Input Fields -->
+                <label for="rowSpacing">ระยะระหว่างแถว (ซม.):</label>
+                <input type="number" id="rowSpacing" name="rowSpacing" step="0.01" required>
+
+                <label for="earsIn4Meters">จำนวนต้นที่ให้ฝักในระยะ 4 เมตร:</label>
+                <input type="number" id="earsIn4Meters" name="earsIn4Meters" step="0.01" required>
+
+                <label for="kernelsPerEar">จำนวนเมล็ดต่อฝัก:</label>
+                <input type="number" id="kernelsPerEar" name="kernelsPerEar" step="0.01" required>
+
+                <label style="display: none;" for="femaleArea">Value of Female Area (B):</label>
+                <input type="hidden" id="femaleArea" name="femaleArea" step="0.01" readonly required>
+
+                <label for="uniformFactor">ความสมบูรณ์ของแปลง (65-90%):</label>
+                <input type="number" id="uniformFactor" name="uniformFactor" step="0.01" required>
+
+                <label style="display: none;" for="kernelsPerKg">Value of Kernels per Kg (BB):</label>
+                <input type="hidden" id="kernelsPerKg" name="kernelsPerKg" readonly required>
+
+                <!-- New Field: Standing Area (Rai) -->
+                <label for="standingArea">พื้นที่ปลูกคงเหลือ (ไร่):</label>
+                <input type="number" id="standingArea" name="standingArea" step="0.01" required>
+
+                <button type="submit">คำนวณผลผลิต</button>
+            </form>
+        </section>
+
+        <section id="resultsSection" hidden>
+            <p id="population"></p>
+            <p id="result"></p>
+            <!-- New Output: Total Wet Ear (Kg) -->
+            <p id="totalWetEar"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; Popporn Yingthongchai</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

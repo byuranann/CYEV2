@@ -79,6 +79,7 @@ form.addEventListener('submit', function (e) {
 
     fetch("https://script.google.com/macros/s/AKfycbwrjHKV-BZi7H-ODdsVnjNTGG2cwycoOd_lFOU0FgGb2XReurlXJDoHlW0oa8GACLZr/exec", {
     method: "POST",
+    mode: "no-cors"
     headers: {
         "Content-Type": "application/json"
     },
@@ -105,3 +106,4 @@ form.addEventListener('submit', function (e) {
     console.error("Error sending data", err);
 });
 });
+

@@ -28,23 +28,23 @@ femaleAreaRatioDropdown.addEventListener('change', function () {
 });
 
 // Add event listener for form submission
+
 form.addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent form from submitting
+  e.preventDefault();
 
-    // Get input values
-    const rowSpacing = parseFloat(document.getElementById('rowSpacing').value); // K
-    const earsIn4Meters = parseFloat(document.getElementById('earsIn4Meters').value); // N
-    const kernelsPerEar = parseFloat(document.getElementById('kernelsPerEar').value); // W
-    const femaleArea = parseFloat(document.getElementById('femaleArea').value); // B
-    const uniformFactor = parseFloat(document.getElementById('uniformFactor').value); // X
-    const kernelsPerKg = parseFloat(document.getElementById('kernelsPerKg').value); // BB
-    const standingArea = parseFloat(document.getElementById('standingArea').value); // Standing Area (Rai)
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const UserLocation = document.getElementById('location').value;
+  // อ่านค่าอินพุต
+  const rowSpacing = parseFloat(document.getElementById('rowSpacing').value);
+  const earsIn4Meters = parseFloat(document.getElementById('earsIn4Meters').value);
+  const kernelsPerEar = parseFloat(document.getElementById('kernelsPerEar').value);
+  const femaleArea = parseFloat(document.getElementById('femaleArea').value);
+  const uniformFactor = parseFloat(document.getElementById('uniformFactor').value);
+  const kernelsPerKg = parseFloat(document.getElementById('kernelsPerKg').value);
+  const standingArea = parseFloat(document.getElementById('standingArea').value);
+  const firstName = document.getElementById('firstName').value;
+  const lastName = document.getElementById('lastName').value;
+  const UserLocation = document.getElementById('location').value;
 
-    
-const submitBtn = form.querySelector('[type="submit"]');
+  const submitBtn = form.querySelector('[type="submit"]');
 
   // --- VALIDATION ขั้นพื้นฐาน ---
   // 1) ตรวจว่าค่า number ไม่เป็น NaN
@@ -93,70 +93,67 @@ const submitBtn = form.querySelector('[type="submit"]');
     return;
   }
 
+  // --- แสดงผล ---
+  populationElement.innerHTML = `
+    <strong>จำนวนประชากรของตัวเมียต่อไร่:</strong><br>
+    <span class="highlight-number">${population.toFixed(2)}</span> ต้น ต่อ ไร่
+  `;
+  resultElement.innerHTML = `
+    <strong>ผลผลิตต่อไร่:</strong><br>
+    <span class="highlight-number">${yieldEstimate.toFixed(2)}</span> กิโลกรัม ต่อ ไร่
+  `;
+  totalWetEarElement.innerHTML = `
+    <strong>ผลผลิตรวม (กก.):</strong><br>
+    <span class="highlight-number">${totalWetEar.toFixed(2)}</span> กิโลกรัม
+  `;
+  resultsSection.hidden = false;
 
-    // Display the population
-    populationElement.innerHTML = `
-        <strong>จำนวนประชากรของตัวเมียต่อไร่:</strong><br>
-        <span class="highlight-number">${population.toFixed(2)}</span> ต้น ต่อ ไร่
-    `;
-
-    // Display the result
-    resultElement.innerHTML = `
-        <strong>ผลผลิตต่อไร่:</strong><br>
-        <span class="highlight-number">${yieldEstimate.toFixed(2)}</span> กิโลกรัม ต่อ ไร่
-    `;
-
-    // Display Total Wet Ear (Kg)
-    totalWetEarElement.innerHTML = `
-        <strong>ผลผลิตรวม (กก.):</strong><br>
-        <span class="highlight-number">${totalWetEar.toFixed(2)}</span> กิโลกรัม
-    `;
-
-     // Show the results section
-     resultsSection.hidden = false; // Remove the hidden attribute
-
-
-    fetch("https://script.google.com/macros/s/AKfycbwrjHKV-BZi7H-ODdsVnjNTGG2cwycoOd_lFOU0FgGb2XReurlXJDoHlW0oa8GACLZr/exec", {
+  // --- ส่งข้อมูลไป Google Apps Script ---
+  console.log('Sending data to Apps Script…');
+  fetch("https://script.google.com/macros/s/AKfycbwrjHKV-BZi7H-ODdsVnjNTGG2cwycoOd_lFOU0FgGb2XReurlXJDoHlW0oa8GACLZr/exec", {
     method: "POST",
-    mode: "no-cors",
+    mode: "no-cors", // response จะเป็น opaque
     headers: {
-        "Content-Type": "application/json"
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({
-        firstName,
-        lastName,
-        location: UserLocation,
-        hybrid: hybridDropdown.options[hybridDropdown.selectedIndex].text,
-        rowSpacing,
-        earsIn4Meters,
-        kernelsPerEar,
-        femaleArea,
-        uniformFactor,
-        standingArea,
-        yieldEstimate: yieldEstimate.toFixed(2),
-        totalWetEar: totalWetEar.toFixed(2)
+      firstName,
+      lastName,
+      location: UserLocation,
+      hybrid: hybridDropdown.options[hybridDropdown.selectedIndex].text,
+      rowSpacing,
+      earsIn4Meters,
+      kernelsPerEar,
+      femaleArea,
+      uniformFactor,
+      standingArea,
+      yieldEstimate: yieldEstimate.toFixed(2),
+      totalWetEar: totalWetEar.toFixed(2)
     })
-})
+  })
+  .then(() => {
+    console.log("Request sent (no-cors).");
+  })
+  .catch(err => {
+    console.error("Error sending data", err);
+    alert('ส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง');
+  })
+  .finally(() => {
+    // เปิดปุ่มกลับเสมอ
+    if (submitBtn) submitBtn.disabled = false;
+  });
 
-.then(() => {
-  // หมายเหตุ: no-cors จะได้ response แบบ opaque อ่านเนื้อไม่ได้
-  console.log("Request sent (no-cors).");
-})
-.catch(err => {
-  console.error("Error sending data", err);
-});
+  // --- รีเซ็ตฟอร์ม (คงผลลัพธ์ที่แสดงไว้) ---
+  form.reset();
 
-form.reset();
+  // รีเซ็ต dropdown กลับไป placeholder และเคลียร์ช่อง auto-fill
+  hybridDropdown.selectedIndex = 0;
+  femaleAreaRatioDropdown.selectedIndex = 0;
+
+  kernelsPerKgInput.value = "";
+  femaleAreaInput.value = "";
 
 
-hybridDropdown.selectedIndex = 0;           // ให้กลับไปตัวเลือกแรก เช่น "เลือกสายพันธุ์"
-femaleAreaRatioDropdown.selectedIndex = 0;  // ให้กลับไปตัวเลือกแรก เช่น "เลือกร้อยละพื้นที่ตัวเมีย"
-
-// เคลียร์ค่าช่องที่ถูก auto-fill ด้วยมือด้วย (กัน edge-case)
-kernelsPerKgInput.value = "";
-femaleAreaInput.value = "";
-
-});
 
 
 

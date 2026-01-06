@@ -76,7 +76,6 @@ form.addEventListener('submit', function (e) {
 
      // Show the results section
      resultsSection.hidden = false; // Remove the hidden attribute
-});
 
 fetch("https://script.google.com/macros/s/AKfycbwrjHKV-BZi7H-ODdsVnjNTGG2cwycoOd_lFOU0FgGb2XReurlXJDoHlW0oa8GACLZr/exec", {
     method: "POST",
@@ -106,4 +105,5 @@ fetch("https://script.google.com/macros/s/AKfycbwrjHKV-BZi7H-ODdsVnjNTGG2cwycoOd
     console.error("Error sending data", err);
 
 });
+
 

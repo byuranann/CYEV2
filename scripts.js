@@ -104,3 +104,4 @@ form.addEventListener('submit', function (e) {
 .catch(err => {
     console.error("Error sending data", err);
 });
+});

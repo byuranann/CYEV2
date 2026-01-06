@@ -43,6 +43,19 @@ form.addEventListener('submit', function (e) {
     const lastName = document.getElementById('lastName').value;
     const UserLocation = document.getElementById('location').value;
 
+    
+    const inputs = {
+        rowSpacing, earsIn4Meters, kernelsPerEar, femaleArea,
+        uniformFactor, kernelsPerKg, standingArea
+      };
+      for (const [key, val] of Object.entries(inputs)) {
+        if (Number.isNaN(val)) {
+          alert(`กรุณากรอกค่าที่ถูกต้องในช่อง: ${key}`);
+          return; // หยุดถ้าข้อมูลไม่ครบ
+        }    
+      }
+
+    
     // Perform the calculation using the provided formula
     const yieldEstimate =
         (((((1600 / (rowSpacing / 100)) / (4 / earsIn4Meters)) * femaleArea) *
@@ -77,6 +90,11 @@ form.addEventListener('submit', function (e) {
      // Show the results section
      resultsSection.hidden = false; // Remove the hidden attribute
 
+    
+    const submitBtn = form.querySelector('[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+
     fetch("https://script.google.com/macros/s/AKfycbwrjHKV-BZi7H-ODdsVnjNTGG2cwycoOd_lFOU0FgGb2XReurlXJDoHlW0oa8GACLZr/exec", {
     method: "POST",
     mode: "no-cors",
@@ -99,7 +117,7 @@ form.addEventListener('submit', function (e) {
     })
 })
 
-then(() => {
+.then(() => {
   // หมายเหตุ: no-cors จะได้ response แบบ opaque อ่านเนื้อไม่ได้
   console.log("Request sent (no-cors).");
 })
@@ -118,6 +136,7 @@ kernelsPerKgInput.value = "";
 femaleAreaInput.value = "";
 
 });
+
 
 
 

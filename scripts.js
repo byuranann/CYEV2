@@ -152,10 +152,4 @@ form.addEventListener('submit', function (e) {
 
   kernelsPerKgInput.value = "";
   femaleAreaInput.value = "";
-
-
-
-
-
-
-
+    });

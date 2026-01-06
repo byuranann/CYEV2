@@ -10,6 +10,7 @@ const populationElement = document.getElementById('population');
 const firstName = document.getElementById('firstName').value;
 const lastName = document.getElementById('lastName').value;
 const location = document.getElementById('location').value;
+const resultsSection = document.getElementById('resultsSection');
 
 // Add event listener for hybrid selection
 hybridDropdown.addEventListener('change', function () {
@@ -103,4 +104,5 @@ fetch("https://script.google.com/macros/s/AKfycbwrjHKV-BZi7H-ODdsVnjNTGG2cwycoOd
 })
 .catch(err => {
     console.error("Error sending data", err);
+
 });

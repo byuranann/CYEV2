@@ -98,13 +98,26 @@ form.addEventListener('submit', function (e) {
         totalWetEar: totalWetEar.toFixed(2)
     })
 })
-.then(res => res.json())
-.then(data => {
-    console.log("Saved to Google Sheet", data);
+
+then(() => {
+  // หมายเหตุ: no-cors จะได้ response แบบ opaque อ่านเนื้อไม่ได้
+  console.log("Request sent (no-cors).");
 })
 .catch(err => {
-    console.error("Error sending data", err);
+  console.error("Error sending data", err);
 });
+
+form.reset();
+
+
+hybridDropdown.selectedIndex = 0;           // ให้กลับไปตัวเลือกแรก เช่น "เลือกสายพันธุ์"
+femaleAreaRatioDropdown.selectedIndex = 0;  // ให้กลับไปตัวเลือกแรก เช่น "เลือกร้อยละพื้นที่ตัวเมีย"
+
+// เคลียร์ค่าช่องที่ถูก auto-fill ด้วยมือด้วย (กัน edge-case)
+kernelsPerKgInput.value = "";
+femaleAreaInput.value = "";
+
 });
+
 
 

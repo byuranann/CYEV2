@@ -9,7 +9,7 @@ const femaleAreaInput = document.getElementById('femaleArea');
 const populationElement = document.getElementById('population');
 const firstName = document.getElementById('firstName').value;
 const lastName = document.getElementById('lastName').value;
-const location = document.getElementById('location').value;
+const UserLocation = document.getElementById('location').value;
 const resultsSection = document.getElementById('resultsSection');
 
 // Add event listener for hybrid selection
@@ -86,7 +86,7 @@ fetch("https://script.google.com/macros/s/AKfycbwrjHKV-BZi7H-ODdsVnjNTGG2cwycoOd
     body: JSON.stringify({
         firstName,
         lastName,
-        location,
+        location: UserLocation,
         hybrid: hybridDropdown.options[hybridDropdown.selectedIndex].text,
         rowSpacing,
         earsIn4Meters,
@@ -106,3 +106,4 @@ fetch("https://script.google.com/macros/s/AKfycbwrjHKV-BZi7H-ODdsVnjNTGG2cwycoOd
     console.error("Error sending data", err);
 
 });
+

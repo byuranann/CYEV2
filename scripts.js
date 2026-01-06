@@ -7,9 +7,6 @@ const femaleAreaRatioDropdown = document.getElementById('femaleAreaRatio');
 const kernelsPerKgInput = document.getElementById('kernelsPerKg');
 const femaleAreaInput = document.getElementById('femaleArea');
 const populationElement = document.getElementById('population');
-const firstName = document.getElementById('firstName').value;
-const lastName = document.getElementById('lastName').value;
-const UserLocation = document.getElementById('location').value;
 const resultsSection = document.getElementById('resultsSection');
 
 // Add event listener for hybrid selection
@@ -42,6 +39,9 @@ form.addEventListener('submit', function (e) {
     const uniformFactor = parseFloat(document.getElementById('uniformFactor').value); // X
     const kernelsPerKg = parseFloat(document.getElementById('kernelsPerKg').value); // BB
     const standingArea = parseFloat(document.getElementById('standingArea').value); // Standing Area (Rai)
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const UserLocation = document.getElementById('location').value;
 
     // Perform the calculation using the provided formula
     const yieldEstimate =
@@ -77,7 +77,7 @@ form.addEventListener('submit', function (e) {
      // Show the results section
      resultsSection.hidden = false; // Remove the hidden attribute
 
-fetch("https://script.google.com/macros/s/AKfycbwrjHKV-BZi7H-ODdsVnjNTGG2cwycoOd_lFOU0FgGb2XReurlXJDoHlW0oa8GACLZr/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbwrjHKV-BZi7H-ODdsVnjNTGG2cwycoOd_lFOU0FgGb2XReurlXJDoHlW0oa8GACLZr/exec", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
@@ -103,7 +103,4 @@ fetch("https://script.google.com/macros/s/AKfycbwrjHKV-BZi7H-ODdsVnjNTGG2cwycoOd
 })
 .catch(err => {
     console.error("Error sending data", err);
-
 });
-
-

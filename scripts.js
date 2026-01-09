@@ -127,6 +127,7 @@ form.addEventListener('submit', function (e) {
       femaleArea,
       uniformFactor,
       standingArea,
+      population,
       yieldEstimate: yieldEstimate.toFixed(2),
       totalWetEar: totalWetEar.toFixed(2)
     })
@@ -153,3 +154,4 @@ form.addEventListener('submit', function (e) {
   kernelsPerKgInput.value = "";
   femaleAreaInput.value = "";
     });
+

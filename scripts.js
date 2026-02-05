@@ -82,7 +82,7 @@ form.addEventListener('submit', function (e) {
       (((((1600 / (rowSpacing / 100)) / (4 / earsIn4Meters)) * femaleArea) *
         kernelsPerEar *
         (uniformFactor / 100)) /
-      kernelsPerKg) / 0.6;
+      kernelsPerKg) / 0.65;
 
     totalWetEar = standingArea * yieldEstimate;
     population = ((1600 / (rowSpacing / 100)) / (4 / earsIn4Meters)) * femaleArea;
@@ -154,4 +154,5 @@ form.addEventListener('submit', function (e) {
   kernelsPerKgInput.value = "";
   femaleAreaInput.value = "";
     });
+
 

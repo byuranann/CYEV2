@@ -11,20 +11,22 @@ const resultsSection = document.getElementById('resultsSection');
 
 // Add event listener for hybrid selection
 hybridDropdown.addEventListener('change', function () {
-    // Get the selected value (kernels per kg)
-    const selectedKernelsPerKg = hybridDropdown.value;
+  // Get the selected option element
+  const selectedOption = hybridDropdown.options[hybridDropdown.selectedIndex];
+  // Get the kernels per kg from the data-kernels attribute
+  const selectedKernelsPerKg = selectedOption.getAttribute('data-kernels');
 
-    // Auto-fill the Kernels per Kg (BB) field
-    kernelsPerKgInput.value = selectedKernelsPerKg;
+  // Auto-fill the Kernels per Kg (BB) field
+  kernelsPerKgInput.value = selectedKernelsPerKg;
 });
 
 // Add event listener for female area ratio selection
 femaleAreaRatioDropdown.addEventListener('change', function () {
-    // Get the selected value (female area ratio)
-    const selectedFemaleArea = femaleAreaRatioDropdown.value;
+  // Get the selected value (female area ratio)
+  const selectedFemaleArea = femaleAreaRatioDropdown.value;
 
-    // Auto-fill the Female Area (B) field
-    femaleAreaInput.value = selectedFemaleArea;
+  // Auto-fill the Female Area (B) field
+  femaleAreaInput.value = selectedFemaleArea;
 });
 
 // Add event listener for form submission
@@ -78,11 +80,12 @@ form.addEventListener('submit', function (e) {
   // --- คำนวณ ---
   let yieldEstimate, totalWetEar, population;
   try {
+    const hybridRecoveryFactor = parseFloat(hybridDropdown.value); // Selected hybrid recovery factor
     yieldEstimate =
       (((((1600 / (rowSpacing / 100)) / (4 / earsIn4Meters)) * femaleArea) *
         kernelsPerEar *
         (uniformFactor / 100)) /
-      kernelsPerKg) / 0.65;
+        kernelsPerKg) / hybridRecoveryFactor;
 
     totalWetEar = standingArea * yieldEstimate;
     population = ((1600 / (rowSpacing / 100)) / (4 / earsIn4Meters)) * femaleArea;
@@ -132,17 +135,17 @@ form.addEventListener('submit', function (e) {
       totalWetEar: totalWetEar.toFixed(2)
     })
   })
-  .then(() => {
-    console.log("Request sent (no-cors).");
-  })
-  .catch(err => {
-    console.error("Error sending data", err);
-    alert('ส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง');
-  })
-  .finally(() => {
-    // เปิดปุ่มกลับเสมอ
-    if (submitBtn) submitBtn.disabled = false;
-  });
+    .then(() => {
+      console.log("Request sent (no-cors).");
+    })
+    .catch(err => {
+      console.error("Error sending data", err);
+      alert('ส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง');
+    })
+    .finally(() => {
+      // เปิดปุ่มกลับเสมอ
+      if (submitBtn) submitBtn.disabled = false;
+    });
 
   // --- รีเซ็ตฟอร์ม (คงผลลัพธ์ที่แสดงไว้) ---
   form.reset();
@@ -153,6 +156,6 @@ form.addEventListener('submit', function (e) {
 
   kernelsPerKgInput.value = "";
   femaleAreaInput.value = "";
-    });
+});
 
 

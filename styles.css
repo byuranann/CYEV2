@@ -67,14 +67,12 @@
             pointer-events: none;
             z-index: 1;
             opacity: 0.03;
-            background-image: 
-                repeating-linear-gradient(
-                    45deg,
+            background-image:
+                repeating-linear-gradient(45deg,
                     transparent,
                     transparent 100px,
                     rgba(76, 175, 80, 0.5) 100px,
-                    rgba(76, 175, 80, 0.5) 120px
-                );
+                    rgba(76, 175, 80, 0.5) 120px);
         }
 
         /* Main content should be above watermark */
@@ -82,7 +80,8 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 1.1rem;
             line-height: 1.6;
-            background: linear-gradient(135deg, var(--gray-light) 0%, #e8e8e8 100%);
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
             color: var(--gray-dark);
             min-height: 100vh;
             position: relative;
@@ -91,7 +90,8 @@
 
         /* Header */
         header {
-            background: linear-gradient(135deg, var(--primary-green) 0%, #c11889 100%);
+            background: linear-gradient(135deg, rgba(175, 76, 76, 0.85) 0%, rgba(193, 24, 137, 0.85) 100%);
+            backdrop-filter: blur(5px);
             color: var(--white);
             padding: 2rem 0;
             text-align: center;
@@ -117,7 +117,9 @@
 
         /* Sections */
         section {
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.85);
+            /* Semi-transparent white */
+            backdrop-filter: blur(10px);
             padding: 2rem;
             margin: 2rem 0;
             border-radius: var(--border-radius);
@@ -250,7 +252,8 @@
 
         /* Footer */
         footer {
-            background: linear-gradient(135deg, var(--gray-dark) 0%, #2c2c2c 100%);
+            background: linear-gradient(135deg, rgba(51, 51, 51, 0.9) 0%, rgba(44, 44, 44, 0.9) 100%);
+            backdrop-filter: blur(5px);
             color: var(--white);
             text-align: center;
             padding: 1.5rem 0;
@@ -265,35 +268,35 @@
             .watermark {
                 font-size: 4rem;
             }
-            
+
             header h1 {
                 font-size: 2rem;
             }
-            
+
             main {
                 padding: 1rem;
             }
-            
+
             section {
                 padding: 1.5rem;
                 margin: 1.5rem 0;
             }
-            
+
             form {
                 gap: 1.25rem;
             }
-            
+
             form input,
             form select {
                 padding: 0.875rem 1rem;
                 font-size: 0.95rem;
             }
-            
+
             form button {
                 padding: 0.875rem 1.5rem;
                 font-size: 1.1rem;
             }
-            
+
             #result,
             #totalWetEar,
             #population,
@@ -306,36 +309,36 @@
             .watermark {
                 font-size: 3rem;
             }
-            
+
             header h1 {
                 font-size: 1.75rem;
                 padding: 0 1rem;
             }
-            
+
             main {
                 padding: 0.75rem;
             }
-            
+
             section {
                 padding: 1.25rem;
                 margin: 1rem 0;
             }
-            
+
             form {
                 gap: 1rem;
             }
-            
+
             form input,
             form select {
                 padding: 0.75rem;
                 font-size: 0.9rem;
             }
-            
+
             form button {
                 padding: 0.75rem 1.25rem;
                 font-size: 1rem;
             }
-            
+
             #result,
             #totalWetEar,
             #population,
@@ -350,6 +353,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
